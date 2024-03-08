@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public Transform playerTrans;
+    public Transform playerTransStart; //Give it player spawn position
+    Transform playerTrans; //Player transform after instaciation
+
     private Vector3 cameraOffset;
 
     [Range(0.01f, 1.0f)]
@@ -12,11 +14,12 @@ public class CameraMovement : MonoBehaviour
 
     void Start()
     {
-        cameraOffset = transform.position - playerTrans.transform.position;
+        cameraOffset = transform.position - playerTransStart.position;
     }
 
     void Update()
     {
+        playerTrans = GameObject.Find("Player(Clone)").transform;
         Vector3 newPos = playerTrans.position + cameraOffset;
         transform.position = Vector3.Slerp(transform.position, newPos, smoothness);
     }
