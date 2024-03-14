@@ -32,6 +32,12 @@ public class SpawnerFunctions : MonoBehaviour
     float timeOfLastMinionSpawn = 0;
     float timeOfLastVaweSpawn = 0;
 
+    //Player/Minion Materials
+    public Material blueMeleMaterial;
+    public Material blueRangedMaterial;
+    public Material redMeleMaterial;
+    public Material redRangedMaterial;
+
     void Start()
     {
         SpawnPlayers();
@@ -39,10 +45,8 @@ public class SpawnerFunctions : MonoBehaviour
 
     void Update()
     {
-
-        // !!! Problem sa spawnovanjem vise vawe-ova !!!
-
-        if(Time.time >= timeOfLastVaweSpawn + minionVaweSpawnDelay || Time.time <= 5)
+        //Handle Spawning Minion Vawes
+        if (Time.time >= timeOfLastVaweSpawn + minionVaweSpawnDelay || Time.time < 5)
             SpawnMinionVawe();
     }
 
@@ -63,22 +67,29 @@ public class SpawnerFunctions : MonoBehaviour
             {
                 if (blueSideMinions.Count < numOfMeleMinions && redSideMinions.Count < numOfMeleMinions)
                 {
-                    blueSideMinions.Add(Instantiate(meleMinionPrefab, blueMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity));
-                    redSideMinions.Add(Instantiate(meleMinionPrefab, redMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity));
+                    GameObject blue = Instantiate(meleMinionPrefab, blueMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity);
+                    blue.GetComponent<Renderer>().material = blueMeleMaterial;
+                    blueSideMinions.Add(blue);
+                    GameObject red = Instantiate(meleMinionPrefab, redMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity);
+                    red.GetComponent<Renderer>().material = redMeleMaterial;
+                    redSideMinions.Add(red);
                 }
                 else
                 {
-                    blueSideMinions.Add(Instantiate(rangedMinionPrefab, blueMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity));
-                    redSideMinions.Add(Instantiate(rangedMinionPrefab, redMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity));
+                    GameObject blue = Instantiate(rangedMinionPrefab, blueMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity);
+                    blueSideMinions.Add(blue);
+                    blue.GetComponent<Renderer>().material = blueRangedMaterial;
+                    GameObject red = Instantiate(rangedMinionPrefab, redMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity);
+                    redSideMinions.Add(red);
+                    red.GetComponent<Renderer>().material = redRangedMaterial;
                 }
             }
-            else if(blueSideMinions.Count == numOfMeleMinions + numOfRangedMinions)
+            else if (blueSideMinions.Count == numOfMeleMinions + numOfRangedMinions)
             {
                 timeOfLastVaweSpawn = Time.time;
 
-                //Klirovanje liste nije pomoglo u problemu samo jednog vawe-a
-                //blueSideMinions.Clear();
-                //redSideMinions.Clear();
+                blueSideMinions.Clear();
+                redSideMinions.Clear();
             }
         }
     }
