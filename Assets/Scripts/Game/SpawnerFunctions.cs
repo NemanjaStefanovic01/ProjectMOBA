@@ -67,21 +67,39 @@ public class SpawnerFunctions : MonoBehaviour
             {
                 if (blueSideMinions.Count < numOfMeleMinions && redSideMinions.Count < numOfMeleMinions)
                 {
+                    //Blue side
                     GameObject blue = Instantiate(meleMinionPrefab, blueMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity);
                     blue.GetComponent<Renderer>().material = blueMeleMaterial;
+                    blue.tag = "BlueSide";
+                    blue.GetComponent<MinionMovement>().enemyTeamTag = "RedSide";
+
                     blueSideMinions.Add(blue);
+
+                    //Red side
                     GameObject red = Instantiate(meleMinionPrefab, redMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity);
                     red.GetComponent<Renderer>().material = redMeleMaterial;
+                    red.tag = "RedSide";
+                    red.GetComponent<MinionMovement>().enemyTeamTag = "BlueSide";
+
                     redSideMinions.Add(red);
                 }
                 else
                 {
+                    //Blue side
                     GameObject blue = Instantiate(rangedMinionPrefab, blueMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity);
-                    blueSideMinions.Add(blue);
                     blue.GetComponent<Renderer>().material = blueRangedMaterial;
+                    blue.tag = "BlueSide";
+                    blue.GetComponent<MinionMovement>().enemyTeamTag = "RedSide";
+
+                    blueSideMinions.Add(blue);
+
+                    //Red side
                     GameObject red = Instantiate(rangedMinionPrefab, redMinionSpawnPos.position + Vector3.up / 2, Quaternion.identity);
-                    redSideMinions.Add(red);
                     red.GetComponent<Renderer>().material = redRangedMaterial;
+                    red.tag = "RedSide";
+                    red.GetComponent<MinionMovement>().enemyTeamTag = "BlueSide";
+
+                    redSideMinions.Add(red);
                 }
             }
             else if (blueSideMinions.Count == numOfMeleMinions + numOfRangedMinions)

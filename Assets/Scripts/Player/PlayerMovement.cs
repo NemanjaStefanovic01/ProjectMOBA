@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
         HandleInput();
 
         if(canMove)
-            MoveCharacter();
+            MoveCharacter(); // !!! IGRAC SE NE MRDA KADA POGODI MINIONOV TRIGER COLLIDER !!!
     }
 
     private void HandleInput()
