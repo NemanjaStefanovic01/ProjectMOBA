@@ -151,3 +151,6 @@ MonoBehaviour:
   terrainTag: Terrain
   movementSpeed: 5
   canMove: 1
+  clickables:
+    serializedVersion: 2
+    m_Bits: 207

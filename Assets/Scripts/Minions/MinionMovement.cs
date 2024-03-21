@@ -35,13 +35,4 @@ public class MinionMovement : MonoBehaviour
 
         target = enemyMinionsInRange[0].transform;
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == enemyTeamTag && other.gameObject.layer == this.gameObject.layer) // Check if triger colided with miniont of oposite team
-        {
-            enemyMinionsInRange.Add(other.gameObject);
-            Debug.Log("colidiovao sa: " + other.gameObject.name);
-        }
-    }
 }

@@ -12,13 +12,14 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 targetPosition;
     private bool isMoving = false;
+    public LayerMask clickables;
 
     void Update()
     {
         HandleInput();
 
         if(canMove)
-            MoveCharacter(); // !!! IGRAC SE NE MRDA KADA POGODI MINIONOV TRIGER COLLIDER !!!
+            MoveCharacter();
     }
 
     private void HandleInput()
@@ -27,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
         {
             RaycastHit hit;
 
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity,clickables))
             {
                 //Ako pogodi teren
                 if (hit.collider.CompareTag(terrainTag))
