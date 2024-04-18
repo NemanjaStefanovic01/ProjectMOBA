@@ -12,10 +12,21 @@ public class MinionMovement : MonoBehaviour
 
     //Agro functionality
     public string enemyTeamTag;
-    public List<GameObject> enemyMinionsInRange;
+    public MinionAgro agro;
+    public List<GameObject> enemyMinionsInRange
+    {
+        get
+        {
+            if (agro == null)
+                return null;
+            return agro.aggroList;  
+        }
+    }
 
     private void Start()
     {
+
+        agro = GetComponentInChildren<MinionAgro>();
         target = GameObject.Find("MiddlePoint").transform;
     }
     void Update()
@@ -23,17 +34,20 @@ public class MinionMovement : MonoBehaviour
         SelectTargetFromAgroList();
 
         //Update Agents target destination
-        agent.destination = target.position;
+        if (target != null)
+            agent.destination = target.position;
+        else
+            agent.destination = agent.transform.position;
     }
 
     private void SelectTargetFromAgroList()
     {
-        if (enemyMinionsInRange.Count == 0)
+        if (enemyMinionsInRange == null || enemyMinionsInRange.Count == 0)
             return;
 
         //Add Agro priority!
-        
-        target = enemyMinionsInRange[0].transform;
+        if (enemyMinionsInRange[0] != null)
+            target = enemyMinionsInRange[0].transform;
         
 
         this.GetComponent<MinionCombat>().targetMinion = enemyMinionsInRange[0];
