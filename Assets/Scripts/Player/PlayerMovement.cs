@@ -38,6 +38,10 @@ public class PlayerMovement : MonoBehaviour
                 }
 
                 //Ako pogodi protivnika ide u combat scriptu
+                if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Minion"))
+                {
+                    gameObject.GetComponent<PlayerCombat>().HitMinion(hit.collider.gameObject);
+                }
             }
         }
     }

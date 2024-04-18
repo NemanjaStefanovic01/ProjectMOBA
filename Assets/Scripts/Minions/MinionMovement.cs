@@ -32,7 +32,10 @@ public class MinionMovement : MonoBehaviour
             return;
 
         //Add Agro priority!
-
+        
         target = enemyMinionsInRange[0].transform;
+        
+
+        this.GetComponent<MinionCombat>().targetMinion = enemyMinionsInRange[0];
     }
 }
